@@ -1,13 +1,15 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-# Dockerized C++
+# Dockerized C++ Build Environment
 
 This repository contains a single highly customizable Makefile helping to build C+ projects in a docker container.
 
 ## Usage
-Either download the file into your repository and update the variables or if
-you want to stay tuned, add it as a git submodule and include it in your
-top-level Makefile.
+* Add this repository as a git submodule to your project, for example as directory build_tools:<br>
+`git submodule add  https://github.com/f-squirrel/dockerized_cpp.git build_tools/`
+* Create a Makefile in the root of your project's source tree
+* Override the variables from the [list](#list-of-variables) in the Makefile
+* Include the Makefile from this repository in your new Makefile: `include build_tools/Makefile`
 
 In order to see availabe commands including user-defined, run `make help`:
 
