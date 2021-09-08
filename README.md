@@ -1,12 +1,11 @@
 # Dockerized C++
 
-This repository contains a single Makefile helping to build C+ projects in a docker container.
+This repository contains a single highly customizable Makefile helping to build C+ projects in a docker container.
 
 ## Usage
-Either download the file into your repository and update the variables or if you want to stay tuned, add it as a git submodule.
-
-## Example
-An example of usage can be found in the repository ["Dockerized C++ Build Example"](https://github.com/f-squirrel/dockerized_cpp_build_example).
+Either download the file into your repository and update the variables or if
+you want to stay tuned, add it as a git submodule and include it in your
+top-level Makefile.
 
 In order to see availabe commands including user-defined, run `make help`:
 
@@ -19,6 +18,9 @@ clean                          Clean build directory
 login                          Login to the container. Note: if the container is already running, login into existing one
 build-docker-deps-image        Build the deps image.
 ```
+
+## Example
+An example of usage can be found in the repository ["Dockerized C++ Build Example"](https://github.com/f-squirrel/dockerized_cpp_build_example).
 
 ## List of variables
 
@@ -33,8 +35,8 @@ build-docker-deps-image        Build the deps image.
 | DOCKER_DEPS_CONTAINER | ${DOCKER_DEPS_IMAGE} | The name of build's docker container |
 | DOCKER_DEPS_FILE | DockerfileBuildEnv | Dockerfile used for building the build image |
 | DOCKER_DEPS_IMAGE_BUILD_FLAGS | --no-cache=true | Flags used for building the image, note with this flag on, docker rebuilds from scratch the whole image |
-| DOCKER_PREPEND_MAKEFILES | empty | The list of custom Makefiles to be included before default targets |
-| DOCKER_APPEND_MAKEFILES | empty | The list of custom Makefiles to be included after default targets |
+| DOCKER_PREPEND_MAKEFILES | empty | The list of space-separated custom Makefiles to be included before default targets |
+| DOCKER_APPEND_MAKEFILES | empty | The list of space-separated ustom Makefiles to be included after default targets |
 | DOCKER_CMAKE_FLAGS | empty | Project specific CMake flags |
 | DOCKER_SHELL | bash | Shell used in the container |
 | LOCAL_SRC_PATH | Current directory | The path to the source files |
