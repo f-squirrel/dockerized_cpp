@@ -8,6 +8,18 @@ Either download the file into your repository and update the variables or if you
 ## Example
 An example of usage can be found in the repository ["Dockerized C++ Build Example"](https://github.com/f-squirrel/dockerized_cpp_build_example).
 
+In order to see availabe commands including user-defined, run `make help`:
+
+```plain
+$ make help
+gen_cmake                      Generate cmake files, used internally
+build                          Build source. In order to build a specific target run: make TARGET=<target name>.
+test                           Run all tests
+clean                          Clean build directory
+login                          Login to the container. Note: if the container is already running, login into existing one
+build-docker-deps-image        Build the deps image.
+```
+
 ## List of variables
 
 | Variable name | Default value | Description |
