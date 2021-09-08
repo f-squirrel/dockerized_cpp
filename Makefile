@@ -9,18 +9,20 @@ DOCKER_DEPS_VERSION?=latest
 DOCKER_DEPS_CONTAINER?=${DOCKER_DEPS_IMAGE}
 DOCKER_DEPS_FILE?=DockerfileBuildEnv
 
+DOCKER_DEPS_IMAGE_BUILD_FLAGS=--no-cache=true
+
 DOCKER_PREPEND_MAKEFILES?=
 DOCKER_APPEND_MAKEFILES?=
 
 DOCKER_CMAKE_FLAGS?=
 
-DOCKER_SHELL?="bash"
+DOCKER_SHELL?=bash
 LOCAL_SRC_PATH?=${CURDIR}
 DOCKER_SOURCE_PATH?=/${PROJECT_NAME}
-DOCKER_BUILD_DIR?="build"
-DOCKER_CTEST_TIMEOUT?="5000"
+DOCKER_BUILD_DIR?=build
+DOCKER_CTEST_TIMEOUT?=5000
 
-DOCKER_TEST_CORE_DIR?="cores"
+DOCKER_TEST_CORE_DIR?=cores
 
 ADDITIONAL_RUN_PARAMS?=
 
@@ -89,8 +91,8 @@ login: ## Login to the container. Note: if the container is already running, log
 	fi
 
 .PHONY: build-docker-deps-image
-build-docker-deps-image: ## Build the deps image. Note: without caching
-	docker build -t ${DOCKER_DEPS_REPO}${DOCKER_DEPS_IMAGE}:latest \
+build-docker-deps-image: ## Build the deps image.
+	docker build ${DOCKER_DEPS_IMAGE_BUILD_FLAGS} -t ${DOCKER_DEPS_REPO}${DOCKER_DEPS_IMAGE}:latest \
 		-f ./${DOCKER_DEPS_FILE} .
 	@echo
 	@echo "Build finished. Docker image name: \"${DOCKER_DEPS_REPO}${DOCKER_DEPS_IMAGE}:latest\"."
