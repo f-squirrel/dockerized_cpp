@@ -26,7 +26,7 @@ DOCKER_TEST_CORE_DIR?=${DOCKER_BUILD_DIR}/cores
 
 DOCKER_ADDITIONAL_RUN_PARAMS?=
 
-DOCKER_BASIC_RUN_PARAMS?=-it --init --rm --privileged=true \
+DOCKER_BASIC_RUN_PARAMS?=-it --init --rm \
 					  --memory-swap=-1 \
 					  --ulimit core=-1 \
 					  --name="${DOCKER_DEPS_CONTAINER}" \
