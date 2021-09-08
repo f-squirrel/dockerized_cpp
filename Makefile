@@ -17,22 +17,22 @@ DOCKER_APPEND_MAKEFILES?=
 DOCKER_CMAKE_FLAGS?=
 
 DOCKER_SHELL?=bash
-LOCAL_SRC_PATH?=${CURDIR}
+LOCAL_SOURCE_PATH?=${CURDIR}
 DOCKER_SOURCE_PATH?=/${PROJECT_NAME}
 DOCKER_BUILD_DIR?=build
 DOCKER_CTEST_TIMEOUT?=5000
 
 DOCKER_TEST_CORE_DIR?=${DOCKER_BUILD_DIR}/cores
 
-ADDITIONAL_RUN_PARAMS?=
+DOCKER_ADDITIONAL_RUN_PARAMS?=
 
-BASIC_RUN_PARAMS?=-it --init --rm --privileged=true \
+DOCKER_BASIC_RUN_PARAMS?=-it --init --rm --privileged=true \
 					  --memory-swap=-1 \
 					  --ulimit core=-1 \
 					  --name="${DOCKER_DEPS_CONTAINER}" \
 					  --workdir=${DOCKER_SOURCE_PATH} \
-					  --mount type=bind,source=${LOCAL_SRC_PATH},target=${DOCKER_SOURCE_PATH} \
-					  ${ADDITIONAL_RUN_PARAMS} \
+					  --mount type=bind,source=${LOCAL_SOURCE_PATH},target=${DOCKER_SOURCE_PATH} \
+					  ${DOCKER_ADDITIONAL_RUN_PARAMS} \
 					  ${DOCKER_DEPS_REPO}${DOCKER_DEPS_IMAGE}:${DOCKER_DEPS_VERSION}
 
 IF_CONTAINER_RUNS=$(shell docker container inspect -f '{{.State.Running}}' ${DOCKER_DEPS_CONTAINER} 2>/dev/null)
@@ -48,7 +48,7 @@ help: ##
 
 .PHONY: gen_cmake
 gen_cmake: ## Generate cmake files, used internally
-	docker run ${BASIC_RUN_PARAMS} \
+	docker run ${DOCKER_BASIC_RUN_PARAMS} \
 		${DOCKER_SHELL} -c \
 		"mkdir -p ${DOCKER_SOURCE_PATH}/${DOCKER_BUILD_DIR} && \
 		cd ${DOCKER_BUILD_DIR} && \
@@ -59,7 +59,7 @@ gen_cmake: ## Generate cmake files, used internally
 
 .PHONY: build
 build: gen_cmake ## Build source. In order to build a specific target run: make TARGET=<target name>.
-	docker run ${BASIC_RUN_PARAMS} \
+	docker run ${DOCKER_BASIC_RUN_PARAMS} \
 		${DOCKER_SHELL} -c \
 		"cd ${DOCKER_BUILD_DIR} && \
 		make -j $$(nproc) ${TARGET}"
@@ -68,7 +68,7 @@ build: gen_cmake ## Build source. In order to build a specific target run: make 
 
 .PHONY: test
 test: ## Run all tests
-	docker run ${BASIC_RUN_PARAMS} \
+	docker run ${DOCKER_BASIC_RUN_PARAMS} \
 		${DOCKER_SHELL} -c \
 		"mkdir -p ${DOCKER_TEST_CORE_DIR} && \
 		cd ${DOCKER_BUILD_DIR} && \
@@ -76,14 +76,14 @@ test: ## Run all tests
 
 .PHONY: clean
 clean: ## Clean build directory
-	docker run ${BASIC_RUN_PARAMS} \
+	docker run ${DOCKER_BASIC_RUN_PARAMS} \
 		${DOCKER_SHELL} -c \
 		"rm -rf ${DOCKER_BUILD_DIR}"
 
 .PHONY: login
 login: ## Login to the container. Note: if the container is already running, login into existing one
 	@if [ "${IF_CONTAINER_RUNS}" != "true" ]; then \
-		docker run ${BASIC_RUN_PARAMS} \
+		docker run ${DOCKER_BASIC_RUN_PARAMS} \
 			${DOCKER_SHELL}; \
 	else \
 		docker exec -it ${DOCKER_DEPS_CONTAINER} \
