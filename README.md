@@ -1,3 +1,5 @@
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 # Dockerized C++
 
 This repository contains a single highly customizable Makefile helping to build C+ projects in a docker container.
