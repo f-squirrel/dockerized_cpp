@@ -26,7 +26,15 @@ DOCKER_TEST_CORE_DIR?=${DOCKER_BUILD_DIR}/cores
 
 DOCKER_ADDITIONAL_RUN_PARAMS?=
 
+DOCKER_USER_ROOT=OFF
+
+ifeq ($(DOCKER_USER_ROOT),OFF)
+	DOCKER_USER?=--user $(shell id -u):$(shell id -g)
+else
+endif
+
 DOCKER_BASIC_RUN_PARAMS?=-it --init --rm \
+					  ${DOCKER_USER} \
 					  --memory-swap=-1 \
 					  --ulimit core=-1 \
 					  --name="${DOCKER_DEPS_CONTAINER}" \

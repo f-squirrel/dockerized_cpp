@@ -5,13 +5,14 @@
 This repository contains a single highly customizable Makefile helping to build C/C++ projects in a docker container.
 
 ## Usage
+
 * Add this repository as a git submodule to your project, for example as directory build_tools:<br>
 `git submodule add  https://github.com/f-squirrel/dockerized_cpp.git build_tools/`
 * Create a Makefile in the root of your project's source tree
 * Override the variables from the [list](#list-of-variables) in the Makefile
 * Include the Makefile from this repository in your new Makefile: `include build_tools/Makefile`
 
-In order to see availabe commands including user-defined, run `make help`:
+In order to see available commands including user-defined ones, run `make help`:
 
 ```plain
 $ make help
@@ -24,6 +25,7 @@ build-docker-deps-image        Build the deps image.
 ```
 
 ## Example
+
 An example of usage can be found in the repository ["Dockerized C/C++ Build Example"](https://github.com/f-squirrel/dockerized_cpp_build_example).
 
 ## List of variables
@@ -31,7 +33,7 @@ An example of usage can be found in the repository ["Dockerized C/C++ Build Exam
 | Variable name                   | Default value               | Description |
 | -------------                   | -------------               | ----------- |
 | `PROJECT_NAME`                  | project                     | Name of the project, by default used in multiple places |
-| `DOCKER_CC`                     | clang                       | C copmiler used in the project |
+| `DOCKER_CC`                     | clang                       | C compiler used in the project |
 | `DOCKER_CXX`                    | clang++                     | C++ copmiler used in the project |
 | `DOCKER_DEPS_REPO`              | `${PROJECT_NAME}/`          | Docker repository where the build image is stored |
 | `DOCKER_DEPS_IMAGE`             | `${PROJECT_NAME}_build`     | The name of the build image |
@@ -50,4 +52,4 @@ An example of usage can be found in the repository ["Dockerized C/C++ Build Exam
 | `DOCKER_TEST_CORE_DIR`          | `${DOCKER_BUILD_DIR}/cores` | Path to the core files. For more information on configuring core dumps in docker please refer [here](https://ddanilov.me/how-to-configure-core-dump-in-docker-container) |
 | `DOCKER_ADDITIONAL_RUN_PARAMS`  | empty                       | Additional docker run commands |
 | `DOCKER_BASIC_RUN_PARAMS`       | [link to the code](https://github.com/f-squirrel/dockerized_cpp/blob/master/Makefile#L29) | Default commands used for running the build container |
-
+| `DOCKER_USER_ROOT`              | `OFF`                       | Runs container as root user |
